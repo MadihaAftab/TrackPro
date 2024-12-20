@@ -10,43 +10,42 @@ const AdminSidebar = () => {
         //<div className="bg-gradient-to-t from-yellow-500 via-orange-700 to-red-700 text-white h-screen fixed left-0 top-0 bottom-0 sapce-y-2 w-64">
         <div className="bg-gradient-to-t from-red-700 via-orange-700 to-yellow-300 text-white h-screen fixed left-0 top-0 bottom-0 sapce-y-2 w-64">
             <div className="bg-white">
-                <img src={sidebarLogo} alt="Image 1" className="w-25" />
+                <img src={sidebarLogo} alt="Image 1" className=" w-25 mt-2" />
             </div>
-            <div className="burgerContainer">
-                <div className="burgerTrigger"></div>
-                <div className="burgerMenu"></div>
-            </div>
-            <div className="flex justify-center items-center mt-4">
+            <div className="bg-white bg-opacity-30 p-4 rounded-lg shadow-lg backdrop-blur-lg max-w-xs mx-auto flex justify-center items-center mt-4">
                 <Avatar name="Madiha Aftab" size="40" round={true} />
                 <div className="profileContent">
-                    <p className="name">Madiha Aftab</p>
-                    <p>madiha@gmail.com</p>
+                    <p className="name ml-4 text-sm">Madiha Aftab</p>
+                    <p className="name ml-4 text-sm">madiha@gmail.com</p>
                 </div>
             </div>
-            <NavLink to="/admin-dashboard" className="flex items-center space-x-4 bock py-2.5 px-4 hover:bg-yellow-600 rounded-lg">
-                <FaHome className="mr-2"/>
-                <span>Dashboard</span>
-            </NavLink>
-            <NavLink to="/employee-dashboard" className="flex items-center space-x-4 bock py-2.5 px-4 hover:bg-yellow-600 rounded-lg">
-                <FaUserFriends/>
-                <span>Employees</span>
-            </NavLink>
-            <NavLink to="/attendance" className="flex items-center space-x-4 bock py-2.5 px-4 hover:bg-yellow-600 rounded-lg">
-                <FaCalendar/>
-                <span>Attendance Management</span>
-            </NavLink>
-            <NavLink to="/payroll" className="flex items-center space-x-4 bock py-2.5 px-4 hover:bg-yellow-600 rounded-lg">
-                <FaDollarSign/>
-                <span>Payroll</span>
-            </NavLink>
-            <NavLink to="/performance" className="flex items-center space-x-4 bock py-2.5 px-4 hover:bg-yellow-600 rounded-lg">
-                <FaTachometerAlt/>
-                <span>Performance Monitoring</span>
-            </NavLink>
-            <NavLink to="/setting" className="flex items-center space-x-4 bock py-2.5 px-4 hover:bg-yellow-600 rounded-lg">
-                <FaCog/>
-                <span>Settings</span>
-            </NavLink>
+            <div className="mt-8">
+                <NavLink to="/admin-dashboard" className={({isActive}) => `${isActive ? "bg-white bg-opacity-20" : " "} flex items-center space-x-4 bock py-2.5 px-4 hover:bg-yellow-600 rounded-lg} `}>
+                    <FaHome className="mr-2"/>
+                    <span>Dashboard</span>
+                </NavLink>
+                <NavLink to="/employee-dashboard" className="flex items-center space-x-4 bock py-2.5 px-4 hover:bg-yellow-600 rounded-lg">
+                    <FaUserFriends className="mr-2"/>
+                    <span>Employees</span>
+                </NavLink>
+                <NavLink to="/attendance" className="flex items-center space-x-4 bock py-2.5 px-4 hover:bg-yellow-600 rounded-lg">
+                    <FaCalendar className="mr-2"/>
+                    <span>Attendance Management</span>
+                </NavLink>
+                <NavLink to="/payroll" className="flex items-center space-x-4 bock py-2.5 px-4 hover:bg-yellow-600 rounded-lg">
+                    <FaDollarSign className="mr-2"/>
+                    <span>Payroll</span>
+                </NavLink>
+                <NavLink to="/performance" className="flex items-center space-x-4 bock py-2.5 px-4 hover:bg-yellow-600 rounded-lg">
+                    <FaTachometerAlt className="mr-2"/>
+                    <span>Performance Monitoring</span>
+                </NavLink>
+                <NavLink to="/setting" className="flex items-center space-x-4 bock py-2.5 px-4 hover:bg-yellow-600 rounded-lg">
+                    <FaCog className="mr-2"/>
+                    <span>Settings</span>
+                </NavLink>
+            </div>
+            
         </div>
     )
 }
