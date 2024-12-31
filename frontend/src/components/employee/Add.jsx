@@ -108,6 +108,23 @@ const Step2 = React.memo(({ formData, handleInputChange }) => (
       </Grid>
       <Grid item xs={12}>
         <TextField
+          label="Date of Joining"
+          type="date"
+          variant="outlined"
+          name="doj"
+          fullWidth
+          required
+          InputLabelProps={{
+            shrink: true,
+          }}
+          value={formData.personalInfo.doj}
+          onChange={(e) =>
+            handleInputChange("personalInfo", "doj", e.target.value)
+          }
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
           label="Department"
           variant="outlined"
           name="dept"
@@ -129,6 +146,20 @@ const Step2 = React.memo(({ formData, handleInputChange }) => (
           value={formData.employmentDetails.designation}
           onChange={(e) =>
             handleInputChange("employmentDetails", "designation", e.target.value)
+          }
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          label="Shift Hours"
+          variant="outlined"
+          name="shiftHours"
+          type="number"
+          fullWidth
+          required
+          value={formData.employmentDetails.shiftHours}
+          onChange={(e) =>
+            handleInputChange("employmentDetails", "shiftHours", e.target.value)
           }
         />
       </Grid>

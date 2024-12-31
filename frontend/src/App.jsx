@@ -9,6 +9,8 @@ import AdminSummary from "./components/dashboard/AdminSummary"
 import Add from "./components/employee/Add"
 import EditEmployee from "./components/employee/EditEmployee"
 import ViewEmployee from "./components/employee/ViewEmployee"
+import AttendanceManag from "./components/attendmanage/AttendanceManag"
+import Payroll from "./components/payroll/Payroll"
 
 
 function App() {
@@ -30,6 +32,8 @@ function App() {
           <Route path="/admin-dashboard/add-employee" element={<Add/>}></Route>
           <Route path="/admin-dashboard/edit-employee/:id" element={<EditEmployee/>}></Route>
           <Route path="/admin-dashboard/view-employee/:id" element={<ViewEmployee/>}></Route>
+          <Route path="/admin-dashboard/attend-manage" element={<AttendanceManag/>}></Route>
+          <Route path="/admin-dashboard/payroll" element={<Payroll/>}></Route>
         </Route>
         <Route path="/employee-dashboard" element={<EmployeeDashboard/>}></Route>
       </Routes>

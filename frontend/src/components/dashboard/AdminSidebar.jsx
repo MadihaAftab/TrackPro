@@ -30,11 +30,11 @@ const AdminSidebar = () => {
                     <FaUserFriends className="mr-2"/>
                     <span>Employees</span>
                 </NavLink>
-                <NavLink to="admin-dashboard/attendance" className="flex items-center space-x-4 bock py-2.5 px-4 hover:bg-yellow-600 rounded-lg">
+                <NavLink to="/admin-dashboard/attend-manage" className={({isActive}) => `${isActive ? "bg-white bg-opacity-20" : " "} flex items-center space-x-4 bock py-2.5 px-4 hover:bg-yellow-600 rounded-lg} `}>
                     <FaCalendar className="mr-2"/>
                     <span>Attendance Management</span>
                 </NavLink>
-                <NavLink to="admin-dashboard/payroll" className="flex items-center space-x-4 bock py-2.5 px-4 hover:bg-yellow-600 rounded-lg">
+                <NavLink to="/admin-dashboard/payroll" className={({isActive}) => `${isActive ? "bg-white bg-opacity-20" : " "} flex items-center space-x-4 bock py-2.5 px-4 hover:bg-yellow-600 rounded-lg} `}>
                     <FaDollarSign className="mr-2"/>
                     <span>Payroll</span>
                 </NavLink>
