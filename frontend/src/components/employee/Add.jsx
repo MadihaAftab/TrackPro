@@ -1,8 +1,10 @@
 import React, { useState, useCallback } from "react";
-import { TextField, Button, Grid, Typography, LinearProgress } from "@mui/material";
+import { TextField, Button, Grid, Typography, LinearProgress, FormHelperText, Card, CardContent } from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-// Step1 component wrapped with React.memo to prevent unnecessary re-renders
-const Step1 = React.memo(({ formData, handleInputChange }) => (
+
+const Step1 = React.memo(({ formData, handleInputChange, errors }) => (
   <div>
     <Typography variant="h6" gutterBottom>Step 1: Personal Information</Typography>
     <Grid container spacing={2}>
@@ -17,6 +19,8 @@ const Step1 = React.memo(({ formData, handleInputChange }) => (
           onChange={(e) =>
             handleInputChange("personalInfo", "fullName", e.target.value)
           }
+          error={!!errors.personalInfo.fullName}
+          helperText={errors.personalInfo.fullName}
         />
       </Grid>
       <Grid item xs={12}>
@@ -34,6 +38,8 @@ const Step1 = React.memo(({ formData, handleInputChange }) => (
           onChange={(e) =>
             handleInputChange("personalInfo", "dob", e.target.value)
           }
+          error={!!errors.personalInfo.dob}
+          helperText={errors.personalInfo.dob}
         />
       </Grid>
       <Grid item xs={12}>
@@ -51,6 +57,8 @@ const Step1 = React.memo(({ formData, handleInputChange }) => (
           SelectProps={{
             native: true,
           }}
+          error={!!errors.personalInfo.gender}
+          helperText={errors.personalInfo.gender}
         >
           <option value="">Select Gender</option>
           <option value="Male">Male</option>
@@ -69,6 +77,8 @@ const Step1 = React.memo(({ formData, handleInputChange }) => (
           onChange={(e) =>
             handleInputChange("personalInfo", "phone", e.target.value)
           }
+          error={!!errors.personalInfo.phone}
+          helperText={errors.personalInfo.phone}
         />
       </Grid>
       <Grid item xs={12}>
@@ -82,14 +92,15 @@ const Step1 = React.memo(({ formData, handleInputChange }) => (
           onChange={(e) =>
             handleInputChange("personalInfo", "email", e.target.value)
           }
+          error={!!errors.personalInfo.email}
+          helperText={errors.personalInfo.email}
         />
       </Grid>
     </Grid>
   </div>
 ));
 
-// Step2 component wrapped with React.memo to prevent unnecessary re-renders
-const Step2 = React.memo(({ formData, handleInputChange }) => (
+const Step2 = React.memo(({ formData, handleInputChange, errors }) => (
   <div>
     <Typography variant="h6" gutterBottom>Step 2: Employment Details</Typography>
     <Grid container spacing={2}>
@@ -104,6 +115,8 @@ const Step2 = React.memo(({ formData, handleInputChange }) => (
           onChange={(e) =>
             handleInputChange("employmentDetails", "employeeID", e.target.value)
           }
+          error={!!errors.employmentDetails.employeeID}
+          helperText={errors.employmentDetails.employeeID}
         />
       </Grid>
       <Grid item xs={12}>
@@ -112,15 +125,15 @@ const Step2 = React.memo(({ formData, handleInputChange }) => (
           type="date"
           variant="outlined"
           name="doj"
-          fullWidth
           required
-          InputLabelProps={{
-            shrink: true,
-          }}
-          value={formData.personalInfo.doj}
+          fullWidth
+          
+          value={formData.employmentDetails.doj}
           onChange={(e) =>
-            handleInputChange("personalInfo", "doj", e.target.value)
+            handleInputChange("employmentDetails", "doj", e.target.value)
           }
+          error={!!errors.employmentDetails.doj}
+          helperText={errors.employmentDetails.doj}
         />
       </Grid>
       <Grid item xs={12}>
@@ -134,6 +147,8 @@ const Step2 = React.memo(({ formData, handleInputChange }) => (
           onChange={(e) =>
             handleInputChange("employmentDetails", "department", e.target.value)
           }
+          error={!!errors.employmentDetails.department}
+          helperText={errors.employmentDetails.department}
         />
       </Grid>
       <Grid item xs={12}>
@@ -147,6 +162,8 @@ const Step2 = React.memo(({ formData, handleInputChange }) => (
           onChange={(e) =>
             handleInputChange("employmentDetails", "designation", e.target.value)
           }
+          error={!!errors.employmentDetails.designation}
+          helperText={errors.employmentDetails.designation}
         />
       </Grid>
       <Grid item xs={12}>
@@ -161,6 +178,8 @@ const Step2 = React.memo(({ formData, handleInputChange }) => (
           onChange={(e) =>
             handleInputChange("employmentDetails", "shiftHours", e.target.value)
           }
+          error={!!errors.employmentDetails.shiftHours}
+          helperText={errors.employmentDetails.shiftHours}
         />
       </Grid>
       <Grid item xs={12}>
@@ -174,14 +193,15 @@ const Step2 = React.memo(({ formData, handleInputChange }) => (
           onChange={(e) =>
             handleInputChange("compensation", "salary", e.target.value)
           }
+          error={!!errors.compensation.salary}
+          helperText={errors.compensation.salary}
         />
       </Grid>
     </Grid>
   </div>
 ));
 
-// Step3 component wrapped with React.memo to prevent unnecessary re-renders
-const Step3 = React.memo(({ formData, handleInputChange }) => (
+const Step3 = React.memo(({ formData, handleInputChange, handleFileChange, errors }) => (
   <div>
     <Typography variant="h6" gutterBottom>Step 3: Portal Login</Typography>
     <Grid container spacing={2}>
@@ -193,7 +213,7 @@ const Step3 = React.memo(({ formData, handleInputChange }) => (
             name="cv"
             hidden
             onChange={(e) =>
-              handleInputChange("performance", "cv", e.target.files[0])
+              handleFileChange("files", "cv", e.target.files[0])
             }
           />
         </Button>
@@ -206,7 +226,7 @@ const Step3 = React.memo(({ formData, handleInputChange }) => (
             name="dp"
             hidden
             onChange={(e) =>
-              handleInputChange("performance", "dp", e.target.files[0])
+              handleFileChange("files", "dp", e.target.files[0])
             }
           />
         </Button>
@@ -222,6 +242,8 @@ const Step3 = React.memo(({ formData, handleInputChange }) => (
           onChange={(e) =>
             handleInputChange("portalLogin", "workEmail", e.target.value)
           }
+          error={!!errors.portalLogin.workEmail}
+          helperText={errors.portalLogin.workEmail}
         />
       </Grid>
       <Grid item xs={12}>
@@ -236,6 +258,8 @@ const Step3 = React.memo(({ formData, handleInputChange }) => (
           onChange={(e) =>
             handleInputChange("portalLogin", "password", e.target.value)
           }
+          error={!!errors.portalLogin.password}
+          helperText={errors.portalLogin.password}
         />
       </Grid>
     </Grid>
@@ -243,6 +267,7 @@ const Step3 = React.memo(({ formData, handleInputChange }) => (
 ));
 
 const EmployeeForm = () => {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     personalInfo: {
@@ -256,6 +281,8 @@ const EmployeeForm = () => {
       employeeID: "",
       department: "",
       designation: "",
+      doj: "",
+      shiftHours: "",
     },
     portalLogin: {
       workEmail: "",
@@ -264,9 +291,40 @@ const EmployeeForm = () => {
     compensation: {
       salary: "",
     },
+    files: {
+      cv: null,
+      photo: null,
+    },
   });
 
-  // Handle input changes with useCallback to prevent unnecessary re-renders
+  const [errors, setErrors] = useState({
+    personalInfo: {
+      fullName: "",
+      dob: "",
+      gender: "",
+      phone: "",
+      email: "",
+    },
+    employmentDetails: {
+      employeeID: "",
+      department: "",
+      doj: "",
+      designation: "",
+      shiftHours: "",
+    },
+    portalLogin: {
+      workEmail: "",
+      password: "",
+    },
+    compensation: {
+      salary: "",
+    },
+    files: {
+      cv: null,
+      photo: null,
+    },
+  });
+
   const handleInputChange = useCallback((section, field, value) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -275,77 +333,128 @@ const EmployeeForm = () => {
         [field]: value,
       },
     }));
+
+    // Remove the error once the user inputs a value
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [section]: {
+        ...prevErrors[section],
+        [field]: value ? "" : prevErrors[section][field],
+      },
+    }));
   }, []);
 
-  // Handle next step logic with validation
+  const handleFileChange = useCallback((section, field, file) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [section]: {
+        ...prevData[section],
+        [field]: file,
+      },
+    }));
+  }, []);
+
   const handleNext = () => {
+    let validationPassed = true;
+    const newErrors = { ...errors };
+
+    // Validation for Step 1
     if (step === 1) {
       const { fullName, dob, gender, phone, email } = formData.personalInfo;
-      if (!fullName || !dob || !gender || !phone || !email) {
-        alert("Please fill in all the fields in Step 1.");
-        return;
-      }
-    } else if (step === 2) {
-      const { employeeID, department, designation } = formData.employmentDetails;
-      if (!employeeID || !department || !designation) {
-        alert("Please fill in all the fields in Step 2.");
-        return;
-      }
-    } else if (step === 3) {
-      const { workEmail, password } = formData.portalLogin;
-      if (!workEmail || !password) {
-        alert("Please fill in all the fields in Step 3.");
-        return;
-      }
+      if (!fullName) newErrors.personalInfo.fullName = "Full Name is required.";
+      if (!dob) newErrors.personalInfo.dob = "Date of Birth is required.";
+      if (!gender) newErrors.personalInfo.gender = "Gender is required.";
+      if (!phone) newErrors.personalInfo.phone = "Phone Number is required.";
+      if (!email) newErrors.personalInfo.email = "Email is required.";
+
+      validationPassed = !Object.values(newErrors.personalInfo).some((error) => error);
     }
 
-    if (step < 3) {
-      setStep(step + 1);
+    // Validation for Step 2
+    if (step === 2) {
+      const { employeeID, department, designation } = formData.employmentDetails;
+      if (!employeeID) newErrors.employmentDetails.employeeID = "Employee ID is required.";
+      if (!department) newErrors.employmentDetails.department = "Department is required.";
+      if (!designation) newErrors.employmentDetails.designation = "Designation is required.";
+
+      validationPassed = !Object.values(newErrors.employmentDetails).some((error) => error);
+    }
+
+    // Validation for Step 3
+    if (step === 3) {
+      const { workEmail, password } = formData.portalLogin;
+      if (!workEmail) newErrors.portalLogin.workEmail = "Work Email is required.";
+      if (!password) newErrors.portalLogin.password = "Password is required.";
+
+      validationPassed = !Object.values(newErrors.portalLogin).some((error) => error);
+    }
+
+    setErrors(newErrors);
+
+    if (validationPassed) {
+      if (step < 3) {
+        setStep(step + 1);
+      }
     }
   };
 
-  const handlePrev = () => {
-    if (step > 1) {
-      setStep(step - 1);
+  const handleSubmit = () => {
+    let validationPassed = true;
+    const newErrors = { ...errors };
+
+    // Validate all steps before submitting
+    const { fullName, dob, gender, phone, email } = formData.personalInfo;
+    if (!fullName) newErrors.personalInfo.fullName = "Full Name is required.";
+    if (!dob) newErrors.personalInfo.dob = "Date of Birth is required.";
+    if (!gender) newErrors.personalInfo.gender = "Gender is required.";
+    if (!phone) newErrors.personalInfo.phone = "Phone Number is required.";
+    if (!email) newErrors.personalInfo.email = "Email is required.";
+
+    const { employeeID, department, doj, designation } = formData.employmentDetails;
+    if (!employeeID) newErrors.employmentDetails.employeeID = "Employee ID is required.";
+    if (!department) newErrors.employmentDetails.department = "Department is required.";
+    if (!doj) newErrors.employmentDetails.doj = "Date of Joining is required.";
+    if (!designation) newErrors.employmentDetails.designation = "Designation is required.";
+
+    const { workEmail, password } = formData.portalLogin;
+    if (!workEmail) newErrors.portalLogin.workEmail = "Work Email is required.";
+    if (!password) newErrors.portalLogin.password = "Password is required.";
+
+    validationPassed = !Object.values(newErrors.personalInfo).some((error) => error) &&
+                       !Object.values(newErrors.employmentDetails).some((error) => error) &&
+                       !Object.values(newErrors.portalLogin).some((error) => error);
+
+    setErrors(newErrors);
+
+    if (validationPassed) {
+      // Perform form submission logic (e.g., API call)
+      console.log("Form submitted successfully with the data: ", formData);
+      alert("Form submitted successfully!");
+      navigate("/admin-dashboard/employee");
     }
   };
 
   return (
-    <div className="p-6 max-w-3xl mx-auto">
-      <Typography variant="h5" gutterBottom>
-        Employee Form
-      </Typography>
-      <LinearProgress variant="determinate" value={(step / 3) * 100} sx={{ mb: 3 }} />
-
-      {step === 1 && <Step1 formData={formData} handleInputChange={handleInputChange} />}
-      {step === 2 && <Step2 formData={formData} handleInputChange={handleInputChange} />}
-      {step === 3 && <Step3 formData={formData} handleInputChange={handleInputChange} />}
-
-      <div className="mt-6 flex justify-between">
-        {step > 1 && (
-          <Button
-            variant="contained"
-            onClick={handlePrev}
-            sx={{ backgroundColor: "red", color: "white" }}
-          >
-            Previous
-          </Button>
-        )}
-        {step < 3 && (
-          <Button
-            variant="contained"
-            onClick={handleNext}
-            sx={{ backgroundColor: "red", color: "white" }}
-          >
-            Next
-          </Button>
-        )}
-        {step === 3 && (
-          <Button variant="contained" color="success">
-            Submit
-          </Button>
-        )}
-      </div>
+    <div style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
+      <Card sx={{ width: "80%", maxWidth: 800 }}>
+        <CardContent>
+          <LinearProgress variant="determinate" value={(step / 3) * 100} sx={{ marginBottom: 2 }} />
+          <div>
+            {step === 1 && <Step1 formData={formData} handleInputChange={handleInputChange} errors={errors} />}
+            {step === 2 && <Step2 formData={formData} handleInputChange={handleInputChange} errors={errors} />}
+            {step === 3 && <Step3 formData={formData} handleInputChange={handleInputChange} handleFileChange={handleFileChange} errors={errors} />}
+          </div>
+          {step < 3 ? (
+            <Button variant="contained" color="primary" onClick={handleNext} sx={{ marginTop: 2 }}>
+              Next
+            </Button>
+          ) : (
+            <Button variant="contained" color="primary" onClick={handleSubmit} sx={{ marginTop: 2 }}>
+              Submit
+            </Button>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 };
